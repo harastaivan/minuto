@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+import './Application.css';
 
-function App() {
+export const Application = () => {
     const [greetMsg, setGreetMsg] = useState('');
-    const [name, setName] = useState('');
+    const [name, setName] = useState('HUH');
 
     async function greet() {
         setGreetMsg(name);
@@ -31,6 +30,4 @@ function App() {
             <p>{greetMsg}</p>
         </div>
     );
-}
-
-export default App;
+};
