@@ -1,7 +1,7 @@
-import { Heading } from 'modules/ui';
-
 import { useTasksContext } from '../../hooks';
-import { TaskCard } from '../TaskCard';
+import { Scheduled } from '../../config';
+import { getScheduledDate } from '../../utils';
+import { TasksListByGroup } from '../TasksListByGroup';
 
 export interface TasksListProps {}
 
@@ -10,13 +10,18 @@ export const TasksList = ({}: TasksListProps) => {
 
     return (
         <div className="my-8">
-            <Heading level={3}>today</Heading>
+            {Object.values(Scheduled)
+                .map((group) => {
+                    const date = getScheduledDate(group);
+                    const filteredTasks = tasks.filter((task) => task.scheduled === date);
 
-            <div>
-                {tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                ))}
-            </div>
+                    if (filteredTasks.length === 0) {
+                        return null;
+                    }
+
+                    return <TasksListByGroup group={group} tasks={filteredTasks} />;
+                })
+                .filter((x) => x)}
         </div>
     );
 };
