@@ -1,10 +1,13 @@
 import moment from 'moment';
 
-import { TaskCompleted, TaskItem, TaskScheduled } from 'modules/ui';
+import { TaskCompleted, TaskItem } from 'modules/ui';
 import { formatScheduledDate } from 'utils/date';
 
 import { Task } from '../../types';
 import { useTasksContext } from '../../hooks';
+import { Scheduled } from '../../config';
+import { getScheduledDate } from '../../utils';
+import { TaskScheduledDropdown } from '../TaskScheduledDropdown';
 
 export interface TaskCardProps {
     task: Task;
@@ -27,8 +30,24 @@ export const TaskCard = ({ task: { id, name, scheduled, completed } }: TaskCardP
         });
     };
 
+    const onChangeScheduled = (value: Scheduled) => {
+        const scheduled = getScheduledDate(value);
+
+        updateTask({
+            id,
+            scheduled,
+        });
+    };
+
     return (
-        <TaskItem rightContent={<TaskScheduled>{scheduled ? formatScheduledDate(scheduled) : 'later'}</TaskScheduled>}>
+        <TaskItem
+            rightContent={
+                <TaskScheduledDropdown
+                    value={scheduled ? formatScheduledDate(scheduled) : Scheduled.LATER}
+                    onChange={onChangeScheduled}
+                />
+            }
+        >
             <TaskCompleted completed={Boolean(completed)} onClick={onClickCompleted} />
             <div className={`${completed ? 'line-through' : ''}`}>{name}</div>
         </TaskItem>
