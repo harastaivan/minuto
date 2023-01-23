@@ -1,33 +1,35 @@
-import { useState } from 'react';
-import './Application.css';
+import { createBrowserRouter, RouterProvider, useLoaderData } from 'react-router-dom';
 
-export const Application = () => {
-    const [greetMsg, setGreetMsg] = useState('');
-    const [name, setName] = useState('HUH');
+import { config } from 'config';
+import { Layout } from 'modules/layout';
+import { TodayPage } from 'modules/today';
+import { TasksPage } from 'modules/tasks';
+import { TimeTrackingPage } from 'modules/time-tracking';
+import { JournalPage } from 'modules/journal';
 
-    async function greet() {
-        setGreetMsg(name);
-    }
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Layout />,
+        children: [
+            {
+                path: config.routes.today,
+                element: <TodayPage />,
+            },
+            {
+                path: config.routes.tasks,
+                element: <TasksPage />,
+            },
+            {
+                path: config.routes.timeTracker,
+                element: <TimeTrackingPage />,
+            },
+            {
+                path: config.routes.journal,
+                element: <JournalPage />,
+            },
+        ],
+    },
+]);
 
-    return (
-        <div className="container">
-            <h1>Welcome to Tauri!</h1>
-
-            <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-            <div className="row">
-                <div>
-                    <input
-                        id="greet-input"
-                        onChange={(e) => setName(e.currentTarget.value)}
-                        placeholder="Enter a name..."
-                    />
-                    <button type="button" onClick={() => greet()}>
-                        Greet
-                    </button>
-                </div>
-            </div>
-            <p>{greetMsg}</p>
-        </div>
-    );
-};
+export const Application = () => <RouterProvider router={router} />;
