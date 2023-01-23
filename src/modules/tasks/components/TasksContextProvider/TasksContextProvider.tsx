@@ -1,6 +1,6 @@
-import { tasksContext } from 'modules/tasks/context';
-import { PartialTask, Task } from 'modules/tasks/types';
-import React, { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
+import { tasksContext } from '../../context';
+import { PartialTask, Task } from '../../types';
 
 export interface TasksContextProviderProps {
     children: ReactNode;

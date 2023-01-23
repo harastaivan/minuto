@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { TasksContextProvider } from 'modules/tasks';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../Sidebar';
 
@@ -9,7 +9,9 @@ export const Layout = ({}: LayoutProps) => {
         <div className="flex flex-row bg-slate-100 h-screen">
             <Sidebar />
             <main className="px-6 py-4 w-full">
-                <Outlet />
+                <TasksContextProvider>
+                    <Outlet />
+                </TasksContextProvider>
             </main>
         </div>
     );

@@ -1,1 +1,2 @@
-export * from './TasksPage'
+export * from './TasksPage';
+export * from './TasksContextProvider';
