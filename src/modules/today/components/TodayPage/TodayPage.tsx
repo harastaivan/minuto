@@ -6,7 +6,7 @@ export const TodayPage = ({}: TodayPageProps) => {
     return (
         <div>
             <Heading level={1}>today</Heading>
-            <Paragraph bold mt={3}>
+            <Paragraph bold mt={3} light>
                 see today in one place
             </Paragraph>
             <Paragraph>see tasks you have worked on today</Paragraph>

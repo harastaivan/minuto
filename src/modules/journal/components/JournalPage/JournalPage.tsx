@@ -6,7 +6,7 @@ export const JournalPage = ({}: JournalPageProps) => {
     return (
         <div>
             <Heading level={1}>journal</Heading>
-            <Paragraph bold mt={3}>
+            <Paragraph bold mt={3} light>
                 track your mood and thoughts
             </Paragraph>
             <Paragraph>use markdown rich text editor to write your thoughts</Paragraph>

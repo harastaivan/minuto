@@ -27,7 +27,7 @@ export const Sidebar = ({}: SidebarProps) => {
     return (
         <div className="flex flex-col h-full bg-slate-200 py-2">
             {Object.values(items).map((props) => (
-                <Link {...props} />
+                <Link key={props.to} {...props} />
             ))}
         </div>
     );

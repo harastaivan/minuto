@@ -19,8 +19,8 @@ export const Link = ({ Icon, to }: LinkProps) => {
                 isActive ? 'text-red-400' : 'text-slate-500 hover:text-slate-700 transition-colors'
             }
         >
-            <div className="px-4 py-2 ">
-                <Icon className="h-6 w-6 " />
+            <div className="px-4 py-2">
+                <Icon className="h-7 w-7" />
             </div>
         </NavLink>
     );

@@ -6,7 +6,7 @@ export const TimeTrackingPage = ({}: TimeTrackingPageProps) => {
     return (
         <div>
             <Heading level={1}>time tracking</Heading>
-            <Paragraph bold mt={3}>
+            <Paragraph bold mt={3} light>
                 track your time
             </Paragraph>
             <Paragraph>track time for given task with famous pomodoro technique</Paragraph>
