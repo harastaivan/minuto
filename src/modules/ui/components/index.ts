@@ -1,3 +1,4 @@
+export * from './Dropdown';
 export * from './Heading';
 export * from './Paragraph';
 export * from './TaskCompleted';
