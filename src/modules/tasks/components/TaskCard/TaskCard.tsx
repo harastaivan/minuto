@@ -4,7 +4,7 @@ import { TaskCompleted, TaskItem } from 'modules/ui';
 import { formatScheduledDate } from 'utils/date';
 
 import { Task } from '../../types';
-import { useTasksContext } from '../../hooks';
+import { useUpdateTask } from '../../hooks';
 import { Scheduled } from '../../config';
 import { getScheduledDate } from '../../utils';
 import { TaskScheduledDropdown } from '../TaskScheduledDropdown';
@@ -14,18 +14,16 @@ export interface TaskCardProps {
 }
 
 export const TaskCard = ({ task: { id, name, scheduled, completed } }: TaskCardProps) => {
-    const { updateTask } = useTasksContext();
+    const updateTask = useUpdateTask(id);
 
     const onClickCompleted = () => {
         if (completed) {
-            return updateTask({
-                id,
-                completed: undefined,
+            return updateTask.mutateAsync({
+                completed: null,
             });
         }
 
-        updateTask({
-            id,
+        return updateTask.mutateAsync({
             completed: moment(new Date()).format('YYYY-MM-DD'),
         });
     };
@@ -33,14 +31,14 @@ export const TaskCard = ({ task: { id, name, scheduled, completed } }: TaskCardP
     const onChangeScheduled = (value: Scheduled) => {
         const scheduled = getScheduledDate(value);
 
-        updateTask({
-            id,
+        return updateTask.mutateAsync({
             scheduled,
         });
     };
 
     return (
         <TaskItem
+            loading={updateTask.isLoading}
             rightContent={
                 <TaskScheduledDropdown
                     value={scheduled ? formatScheduledDate(scheduled) : Scheduled.LATER}

@@ -1,8 +1,11 @@
-export interface Task {
-    id: string;
+export interface AddTask {
     name: string;
-    completed?: string; // date
-    scheduled?: string; // date
+    completed: string | null; // date
+    scheduled: string | null; // date
 }
 
-export type PartialTask = Pick<Task, 'id'> & Partial<Task>;
+export interface Task extends AddTask {
+    id: string;
+}
+
+export type UpdateTask = Partial<AddTask>;

@@ -1,11 +1,9 @@
 import { type FormEventHandler, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
 
-import { Paragraph, TaskCompleted, TaskItem, TaskScheduled } from 'modules/ui';
+import { TaskCompleted, TaskItem } from 'modules/ui';
 import { formatScheduledDate } from 'utils/date';
 
-import { useTasksContext } from '../../hooks';
+import { useAddTask } from '../../hooks';
 import { Scheduled } from '../../config';
 import { getScheduledDate } from '../../utils';
 import { TaskScheduledDropdown } from '../TaskScheduledDropdown';
@@ -14,22 +12,23 @@ export interface AddTaskProps {}
 
 export const AddTask = ({}: AddTaskProps) => {
     const [name, setName] = useState('');
-    const [scheduled, setScheduled] = useState<string | undefined>(undefined);
-    const { addTask } = useTasksContext();
+    const [scheduled, setScheduled] = useState<string | null>(null);
+    const addTask = useAddTask();
 
     const onChangeScheduled = (value: Scheduled) => {
         const scheduled = getScheduledDate(value);
         setScheduled(scheduled);
     };
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
 
-        addTask({
-            id: uuidv4(),
-            name,
-            scheduled,
-        });
+        try {
+            const result = await addTask.mutateAsync({ name, scheduled, completed: null });
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
 
         setName('');
     };
