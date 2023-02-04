@@ -13,7 +13,10 @@ interface SelectResult<T> {
 export const useTasks = () => {
     const tasks = useQuery(
         [QueryKey.TASKS],
-        () => api.from('tasks').select().order('created_at') as unknown as Promise<SelectResult<Task[]>>,
+        () =>
+            api.from('tasks').select().eq('archived', false).order('created_at') as unknown as Promise<
+                SelectResult<Task[]>
+            >,
     );
 
     return tasks;

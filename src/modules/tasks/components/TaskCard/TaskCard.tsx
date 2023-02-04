@@ -45,6 +45,11 @@ export const TaskCard = ({ task: { id, name, scheduled, completed } }: TaskCardP
                     onChange={onChangeScheduled}
                 />
             }
+            onArchive={() =>
+                updateTask.mutate({
+                    archived: true,
+                })
+            }
         >
             <TaskCompleted completed={Boolean(completed)} onClick={onClickCompleted} />
             <div className={`${completed ? 'line-through' : ''}`}>{name}</div>

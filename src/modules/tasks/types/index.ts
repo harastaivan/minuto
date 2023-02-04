@@ -2,6 +2,7 @@ export interface AddTask {
     name: string;
     completed: string | null; // date
     scheduled: string | null; // date
+    archived: boolean;
 }
 
 export interface Task extends AddTask {
