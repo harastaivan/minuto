@@ -23,8 +23,12 @@ export const AddTask = ({}: AddTaskProps) => {
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
 
+        if (!name) {
+            return;
+        }
+
         try {
-            const result = await addTask.mutateAsync({ name, scheduled, completed: null });
+            const result = await addTask.mutateAsync({ name, scheduled, completed: null, archived: false });
             console.log(result);
         } catch (error) {
             console.error(error);
@@ -49,7 +53,7 @@ export const AddTask = ({}: AddTaskProps) => {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="bg-inherit font-mono font-semibold text-inherit w-full focus-visible:outline-0"
+                        className="bg-inherit font-mono font-semibold text-inherit w-full focus-visible:outline-none focus:outline-none"
                         placeholder="add task"
                     />
                 </TaskItem>
