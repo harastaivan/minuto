@@ -1,4 +1,4 @@
-import { Heading } from 'modules/ui';
+import { Heading, Paragraph } from 'modules/ui';
 import { Task } from '../../types';
 import { Scheduled } from '../../config';
 import { TaskCard } from '../TaskCard';
@@ -17,6 +17,7 @@ export const TasksListByGroup = ({ group, tasks }: TasksListByGroupProps) => {
                 {tasks.map((task) => (
                     <TaskCard key={task.id} task={task} />
                 ))}
+                {tasks.length === 0 && <Paragraph>no tasks</Paragraph>}
             </div>
         </>
     );
