@@ -1,4 +1,7 @@
 import { config } from 'config';
-import Pocketbase from 'pocketbase';
+import { createClient } from '@supabase/supabase-js'
 
-export const api = new Pocketbase(config.api.url);
+const supabaseUrl = config.api.url
+const supabaseKey = config.api.key
+
+export const api = createClient(supabaseUrl, supabaseKey)
