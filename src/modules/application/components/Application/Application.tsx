@@ -1,12 +1,14 @@
 import { createBrowserRouter, RouterProvider, useLoaderData } from 'react-router-dom';
 
 import { config } from 'config';
-import { Authenticated, LoginPage, RedirectPage } from 'modules/auth';
+import { Authenticated, AuthProvider, LoginPage } from 'modules/auth';
 import { TodayPage } from 'modules/today';
 import { TasksPage } from 'modules/tasks';
 import { TimeTrackingPage } from 'modules/time-tracking';
 import { JournalPage } from 'modules/journal';
-import { loginPageLoader, redirectPageLoader } from 'modules/api';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     {
@@ -34,13 +36,13 @@ const router = createBrowserRouter([
     {
         path: config.routes.login,
         element: <LoginPage />,
-        loader: loginPageLoader,
-    },
-    {
-        path: config.routes.redirect,
-        element: <RedirectPage />,
-        loader: redirectPageLoader,
     },
 ]);
 
-export const Application = () => <RouterProvider router={router} />;
+export const Application = () => (
+    <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+        </QueryClientProvider>
+    </AuthProvider>
+);

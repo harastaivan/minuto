@@ -6,8 +6,7 @@ export interface LogoutButtonProps {}
 
 export const LogoutButton = ({}: LogoutButtonProps) => {
     const onClick = () => {
-        api.authStore.clear();
-        location.reload();
+        api.auth.signOut();
     };
 
     return (

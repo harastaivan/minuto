@@ -1,31 +1,39 @@
-import { config } from 'config';
-import type { AuthProviderInfo } from 'pocketbase';
+import { type ReactNode, useEffect, useState } from 'react';
+import { Session } from '@supabase/supabase-js';
+
+import { api } from 'modules/api';
+import { authContext } from '../../context';
+import type { AuthContextValue } from '../../types';
 
 export interface AuthProviderProps {
-    authProvider: AuthProviderInfo;
+    children: ReactNode;
 }
 
-export const AuthProvider = ({ authProvider }: AuthProviderProps) => {
-    const onClick = () => {
-        console.log('login with google');
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+    const [session, setSession] = useState<Session | null>(null);
 
-        localStorage.setItem('provider', JSON.stringify(authProvider));
-
-        const redirectUrl = `${config.appUrl}/${config.routes.redirect}`;
-
-        setTimeout(() => {
-            window.location.href = `${authProvider.authUrl}${redirectUrl}`;
-        }, 1000);
+    const init = async () => {
+        const {
+            data: { session },
+        } = await api.auth.getSession();
+        if (session) {
+            setSession(session);
+        }
     };
 
-    return (
-        <>
-            <button
-                onClick={onClick}
-                className="font-mono font-bold bg-slate-200 text-slate-500 px-8 py-2 rounded m-2 hover:text-slate-600 hover:bg-slate-300 transition-colors"
-            >
-                login with {authProvider.name}
-            </button>
-        </>
-    );
+    useEffect(() => {
+        init();
+
+        api.auth.onAuthStateChange((event, session) => {
+            setSession(session);
+        });
+    }, []);
+
+    const value: AuthContextValue = {
+        session,
+    };
+
+    const { Provider } = authContext;
+
+    return <Provider value={value}>{children}</Provider>;
 };

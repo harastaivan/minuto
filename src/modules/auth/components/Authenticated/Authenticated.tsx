@@ -1,17 +1,21 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 import { config } from 'config';
-import { api } from 'modules/api';
 import { Layout } from 'modules/layout';
+import { useIsAuthenticated } from '../../hooks';
 
 export interface AuthenticatedProps {}
 
 export const Authenticated = ({}: AuthenticatedProps) => {
-    const isAuthenticated = api.authStore.isValid && api.authStore.token;
+    const isAuthenticated = useIsAuthenticated();
 
     if (!isAuthenticated) {
         return <Navigate to={config.routes.login} replace={true} />;
     }
 
-    return <Layout />;
+    return (
+        <Layout>
+            <Outlet />
+        </Layout>
+    );
 };
