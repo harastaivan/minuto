@@ -13,7 +13,7 @@ export const TasksListByGroup = ({ group, tasks }: TasksListByGroupProps) => {
         <>
             <Heading level={3}>{group}</Heading>
 
-            <div>
+            <div className="mb-6">
                 {tasks.map((task) => (
                     <TaskCard key={task.id} task={task} />
                 ))}
