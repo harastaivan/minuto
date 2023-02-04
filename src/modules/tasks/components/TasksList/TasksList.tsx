@@ -26,7 +26,7 @@ export const TasksList = ({}: TasksListProps) => {
                                 return null;
                             }
 
-                            return <TasksListByGroup group={group} tasks={filteredTasks} />;
+                            return <TasksListByGroup key={group} group={group} tasks={filteredTasks} />;
                         })
                         .filter((x) => x)}
                 </>
